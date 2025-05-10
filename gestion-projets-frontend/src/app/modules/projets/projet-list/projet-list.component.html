@@ -1,0 +1,44 @@
+<div class="container">
+  <h2>Liste des Projets</h2>
+
+  <!-- Formulaire d'ajout ou de modification -->
+  <form (ngSubmit)="modeEdition ? modifierProjet() : ajouterProjet()">
+    <input type="text" [(ngModel)]="projetForm.nom" name="nom" placeholder="Nom du projet" required />
+    <input type="text" [(ngModel)]="projetForm.statut" name="statut" placeholder="Statut" required />
+    <input type="date" [(ngModel)]="projetForm.dateDebut" name="dateDebut" placeholder="Date de début" required />
+    <input type="date" [(ngModel)]="projetForm.dateFin" name="dateFin" placeholder="Date de fin" required />
+    <input type="number" [(ngModel)]="projetForm.budget" name="budget" placeholder="Budget" required />
+
+    <button type="submit">{{ modeEdition ? 'Modifier' : 'Ajouter' }}</button>
+    <button type="button" *ngIf="modeEdition" (click)="annulerModification()">Annuler</button>
+  </form>
+
+  <!-- Liste des projets -->
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Statut</th>
+        <th>Date de début</th>
+        <th>Date de fin</th>
+        <th>Budget</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let projet of projets">
+        <td>{{ projet.id }}</td>
+        <td>{{ projet.nom }}</td>
+        <td>{{ projet.statut }}</td>
+        <td>{{ projet.dateDebut }}</td>
+        <td>{{ projet.dateFin }}</td>
+        <td>{{ projet.budget }}</td>
+        <td>
+          <button (click)="chargerProjetDansFormulaire(projet)">Modifier</button>
+          <button (click)="supprimerProjet(projet.id)">Supprimer</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

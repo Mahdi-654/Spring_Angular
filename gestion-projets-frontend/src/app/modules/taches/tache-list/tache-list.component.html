@@ -1,0 +1,144 @@
+<div class="container mt-4">
+    <!-- Formulaire d'ajout d'une nouvelle tâche -->
+    <h2>Ajouter une Tâche</h2>
+    <form (ngSubmit)="ajouterTache()" #tacheForm="ngForm">
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            name="description"
+            [(ngModel)]="nouvelleTache.description"
+            class="form-control"
+            required
+            #description="ngModel"
+          ></textarea>
+          <div *ngIf="description.invalid && description.touched" class="text-danger">
+            La description est obligatoire.
+          </div>
+        </div>
+        <div class="col-md-6 form-group">
+          <label for="etat">État</label>
+          <select
+            id="etat"
+            name="etat"
+            [(ngModel)]="nouvelleTache.etat"
+            class="form-control"
+            required
+            #etat="ngModel"
+          >
+            <option value="A_FAIRE">À Faire</option>
+            <option value="EN_COURS">En Cours</option>
+            <option value="TERMINE">Terminé</option>
+          </select>
+          <div *ngIf="etat.invalid && etat.touched" class="text-danger">
+            L'état est obligatoire.
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <label for="priorite">Priorité</label>
+          <select
+            id="priorite"
+            name="priorite"
+            [(ngModel)]="nouvelleTache.priorite"
+            class="form-control"
+            required
+            #priorite="ngModel"
+          >
+            <option value="FAIBLE">Faible</option>
+            <option value="MOYENNE">Moyenne</option>
+            <option value="ELEVEE">Élevée</option>
+          </select>
+          <div *ngIf="priorite.invalid && priorite.touched" class="text-danger">
+            La priorité est obligatoire.
+          </div>
+        </div>
+        <div class="col-md-6 form-group">
+          <label for="deadline">Date Limite</label>
+          <input
+            type="date"
+            id="deadline"
+            name="deadline"
+            [(ngModel)]="nouvelleTache.deadline"
+            class="form-control"
+            required
+            #deadline="ngModel"
+          />
+          <div *ngIf="deadline.invalid && deadline.touched" class="text-danger">
+            La date limite est obligatoire.
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <label for="projetId">ID du Projet</label>
+          <input
+            type="number"
+            id="projetId"
+            name="projetId"
+            [(ngModel)]="nouvelleTache.projetId"
+            class="form-control"
+            required
+            #projetId="ngModel"
+          />
+          <div *ngIf="projetId.invalid && projetId.touched" class="text-danger">
+            L'ID du projet est obligatoire.
+          </div>
+        </div>
+        <div class="col-md-6 form-group">
+          <label for="responsableId">ID du Responsable</label>
+          <input
+            type="number"
+            id="responsableId"
+            name="responsableId"
+            [(ngModel)]="nouvelleTache.responsableId"
+            class="form-control"
+            required
+            #responsableId="ngModel"
+          />
+          <div *ngIf="responsableId.invalid && responsableId.touched" class="text-danger">
+            L'ID du responsable est obligatoire.
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary mt-3" [disabled]="!tacheForm.valid">
+        Ajouter Tâche
+      </button>
+    </form>
+  
+    <!-- Liste des tâches -->
+    <h2 class="mt-4">Liste des Tâches</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Description</th>
+          <th>État</th>
+          <th>Priorité</th>
+          <th>Date Limite</th>
+          <th>Projet ID</th>
+          <th>Responsable ID</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tache of taches">
+          <td>{{ tache.id }}</td>
+          <td>{{ tache.description }}</td>
+          <td>{{ tache.etat }}</td>
+          <td>{{ tache.priorite }}</td>
+          <td>{{ tache.deadline | date:'shortDate' }}</td>
+          <td>{{ tache.projetId }}</td>
+          <td>{{ tache.responsableId }}</td>
+          <td>
+            <button class="btn btn-danger btn-sm" (click)="supprimerTache(tache.id)">
+              Supprimer
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
